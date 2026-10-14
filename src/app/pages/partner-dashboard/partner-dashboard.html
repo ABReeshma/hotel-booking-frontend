@@ -1,0 +1,153 @@
+
+<div class="page">
+  <header class="navbar">
+    <a routerLink="/">TravelEasy</a>
+    <h2>Partner Dashboard</h2>
+    <a routerLink="/hotels">Hotels</a>
+  </header>
+
+  <main class="content">
+    <h1>Manage Your Hotel</h1>
+    <button type="button" routerLink="/partner/hotels/new">
+  + Add New Hotel
+</button>
+<button type="button" routerLink="/partner/rooms/new">
+  + Add Room
+</button>
+<section class="panel">
+  <h2>Select Hotel</h2>
+
+  <label>
+    Choose a hotel
+
+    <select
+      [value]="partnerHotelId ?? ''"
+      (change)="onHotelChange($any($event.target).value)"
+    >
+      <option value="" disabled>Select a hotel</option>
+
+      <option *ngFor="let hotel of hotels" [value]="hotel.id">
+        {{ hotel.name }} — ID {{ hotel.id }}
+      </option>
+    </select>
+  </label>
+
+  <p *ngIf="hotels.length === 0">
+    No hotels found.
+  </p>
+</section>
+
+    <p>Update property details, manage rooms, and view reservations.</p>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+    <section class="panel">
+      <h2>Hotel Details</h2>
+
+      <button type="button" (click)="loadHotel()">Load Hotel Details</button>
+
+      <form
+        *ngIf="partnerHotel"
+        (ngSubmit)="saveHotel()"
+        class="form-grid"
+      >
+        <label>
+          Hotel Name
+          <input name="name" [(ngModel)]="partnerHotel.name" required />
+        </label>
+
+        <label>
+          Location
+          <input name="location" [(ngModel)]="partnerHotel.location" required />
+        </label>
+
+        <label>
+          Address
+          <input name="address" [(ngModel)]="partnerHotel.address" required />
+        </label>
+
+        <label>
+          Star Rating
+          <input
+            name="starRating"
+            type="number"
+            min="1"
+            max="5"
+            [(ngModel)]="partnerHotel.starRating"
+            required
+          />
+        </label>
+
+        <label>
+          Description
+          <textarea
+            name="description"
+            [(ngModel)]="partnerHotel.description"
+          ></textarea>
+        </label>
+
+        <label>
+          Amenities
+          <input name="amenities" [(ngModel)]="partnerHotel.amenities" />
+        </label>
+
+        <label>
+          Policies
+          <textarea name="policies" [(ngModel)]="partnerHotel.policies"></textarea>
+        </label>
+
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Saving...' : 'Save Hotel Details' }}
+        </button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Room Inventory</h2>
+      <button type="button" (click)="loadRooms()">Load Rooms</button>
+
+      <article class="item-card" *ngFor="let room of partnerRooms">
+        <h3>{{ room.roomType }}</h3>
+        <p>Price per night: ₹{{ room.pricePerNight }}</p>
+        <p>Capacity: {{ room.capacity }}</p>
+        <p>Total rooms: {{ room.totalRooms }}</p>
+        <p>Current status: {{ room.status }}</p>
+
+        <label>
+          Update Status
+          <select
+            #statusSelect
+            [value]="room.status"
+            (change)="updateRoomStatus(room, statusSelect.value)"
+          >
+            <option value="AVAILABLE">AVAILABLE</option>
+            <option value="UNAVAILABLE">UNAVAILABLE</option>
+            <option value="MAINTENANCE">MAINTENANCE</option>
+          </select>
+        </label>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Hotel Reservations</h2>
+      <button type="button" (click)="loadBookings()">
+        Load Reservations
+      </button>
+
+      <article class="item-card" *ngFor="let booking of partnerBookings">
+        <h3>Booking #{{ booking.id }}</h3>
+        <p>Guest: {{ booking.guestName }}</p>
+        <p>Email: {{ booking.guestEmail }}</p>
+        <p>Check-in: {{ booking.checkInDate }}</p>
+        <p>Check-out: {{ booking.checkOutDate }}</p>
+        <p>Total: ₹{{ booking.totalAmount }}</p>
+        <p>Status: {{ booking.status }}</p>
+      </article>
+
+      <p *ngIf="partnerBookings.length === 0">
+        Load reservations to view hotel bookings.
+      </p>
+    </section>
+  </main>
+</div>

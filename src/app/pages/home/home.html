@@ -1,0 +1,59 @@
+
+<div class="home-page">
+  
+<header class="navbar">
+  <a class="brand" routerLink="/">TravelEasy</a>
+
+  <nav>
+    <a routerLink="/">Home</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/my-bookings">My Bookings</a>
+    <a routerLink="/partner/dashboard">Partner Portal</a>
+  </nav>
+</header>
+
+
+  <section class="hero">
+    <h1>Find your perfect stay</h1>
+    <p>Search hotels and plan your next trip.</p>
+
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Enter destination (e.g. Hyderabad)"
+        [(ngModel)]="location"
+        (keyup.enter)="searchHotels()"
+      />
+
+      <button (click)="searchHotels()" [disabled]="loading">
+        {{ loading ? 'Searching...' : 'Search Hotels' }}
+      </button>
+    </div>
+
+    <p class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+  </section>
+
+  <section class="hotel-results" *ngIf="hotels.length > 0">
+    <h2>Hotels in {{ location }}</h2>
+
+    <div class="hotel-grid">
+      <article class="hotel-card" *ngFor="let hotel of hotels">
+        <div class="hotel-icon">🏨</div>
+
+        <h3>{{ hotel.name }}</h3>
+        <p>{{ hotel.location }}</p>
+        <p>{{ hotel.address }}</p>
+        <p>{{ hotel.description }}</p>
+
+        <p>⭐ {{ hotel.starRating }} Star</p>
+        <p><strong>Amenities:</strong> {{ hotel.amenities }}</p>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>TravelEasy — Your journey, our priority.</p>
+  </footer>
+</div>

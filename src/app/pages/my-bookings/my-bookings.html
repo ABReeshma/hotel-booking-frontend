@@ -1,0 +1,59 @@
+
+<div class="page">
+  <header class="navbar">
+  <a routerLink="/">TravelEasy</a>
+  <a routerLink="/hotels">Hotels</a>
+  <a routerLink="/partner/dashboard">Partner Portal</a>
+</header>
+
+  <main class="content">
+    <h1>My Bookings</h1>
+    <p>View your reservations and manage cancellations.</p>
+
+    <form class="search-panel" (ngSubmit)="loadBookings()">
+      <label for="bookingEmail">Email address</label>
+
+      <input
+        id="bookingEmail"
+        type="email"
+        name="bookingEmail"
+        [(ngModel)]="bookingEmail"
+        placeholder="Enter the email used for booking"
+        required
+      />
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Loading...' : 'Find My Bookings' }}
+      </button>
+    </form>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+    <section class="booking-list" *ngIf="myBookings.length > 0">
+      <article class="booking-card" *ngFor="let booking of myBookings">
+        <h2>Booking #{{ booking.id }}</h2>
+
+        <p><strong>Guest:</strong> {{ booking.guestName }}</p>
+        <p><strong>Email:</strong> {{ booking.guestEmail }}</p>
+        <p><strong>Check-in:</strong> {{ booking.checkInDate }}</p>
+        <p><strong>Check-out:</strong> {{ booking.checkOutDate }}</p>
+        <p><strong>Guests:</strong> {{ booking.numberOfGuests }}</p>
+        <p><strong>Total:</strong> ₹{{ booking.totalAmount }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span [class.cancelled]="booking.status === 'CANCELLED'">
+            {{ booking.status }}
+          </span>
+        </p>
+
+        <button
+          *ngIf="booking.status !== 'CANCELLED'"
+          (click)="cancelBooking(booking)"
+        >
+          Cancel Booking
+        </button>
+      </article>
+    </section>
+  </main>
+</div>

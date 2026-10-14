@@ -1,0 +1,97 @@
+
+<div class="page">
+  <header class="navbar">
+    <a routerLink="/">TravelEasy</a>
+    <a routerLink="/partner/dashboard">Partner Dashboard</a>
+  </header>
+
+  <main class="content">
+    <h1>Add Room</h1>
+    <p>Select a hotel and enter the room details.</p>
+
+    <form class="room-form" (ngSubmit)="saveRoom()">
+      <label>
+        Select Hotel *
+        <select
+          name="hotelId"
+          [(ngModel)]="selectedHotelId"
+          required
+        >
+          <option
+            *ngFor="let hotel of hotels"
+            [ngValue]="hotel.id"
+          >
+            {{ hotel.name }} — ID {{ hotel.id }}
+          </option>
+        </select>
+      </label>
+
+      <label>
+        Room Type *
+        <input
+          name="roomType"
+          [(ngModel)]="room.roomType"
+          placeholder="e.g. Deluxe"
+          required
+        />
+      </label>
+
+      <label>
+        Price Per Night (₹) *
+        <input
+          name="price"
+          type="number"
+          min="1"
+          [(ngModel)]="room.pricePerNight"
+          required
+        />
+      </label>
+
+      <label>
+        Guest Capacity *
+        <input
+          name="capacity"
+          type="number"
+          min="1"
+          [(ngModel)]="room.capacity"
+          required
+        />
+      </label>
+
+      <label>
+        Total Rooms *
+        <input
+          name="totalRooms"
+          type="number"
+          min="1"
+          [(ngModel)]="room.totalRooms"
+          required
+        />
+      </label>
+
+      <label>
+        Amenities
+        <input
+          name="amenities"
+          [(ngModel)]="room.amenities"
+          placeholder="WiFi, AC, TV"
+        />
+      </label>
+
+      <label>
+        Status
+        <select name="status" [(ngModel)]="room.status">
+          <option value="AVAILABLE">AVAILABLE</option>
+          <option value="UNAVAILABLE">UNAVAILABLE</option>
+          <option value="MAINTENANCE">MAINTENANCE</option>
+        </select>
+      </label>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Saving Room...' : 'Add Room' }}
+      </button>
+    </form>
+  </main>
+</div>

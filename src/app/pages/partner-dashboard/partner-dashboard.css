@@ -1,0 +1,97 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f7f6f0;
+  color: #26352c;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 8%;
+  background: white;
+}
+
+.navbar a {
+  color: #426b50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.content {
+  padding: 30px 8%;
+}
+
+.panel {
+  margin-top: 25px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #e2e7df;
+  border-radius: 12px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+input,
+textarea,
+select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #cbd5c8;
+  border-radius: 7px;
+  background: white;
+}
+
+button {
+  margin-top: 12px;
+  padding: 12px 18px;
+  background: #426b50;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.item-card {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #e2e7df;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.error {
+  color: #b42318;
+}
+
+.success {
+  color: #287443;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+}

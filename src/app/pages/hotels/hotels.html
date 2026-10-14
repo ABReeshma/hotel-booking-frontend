@@ -1,0 +1,39 @@
+
+
+<header class="navbar">
+  <a class="brand" routerLink="/">TravelEasy</a>
+
+  <nav>
+    <a routerLink="/">Home</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/my-bookings">My Bookings</a>
+    <a routerLink="/partner/dashboard">Partner Portal</a>
+  </nav>
+</header>
+
+
+<main class="hotels-page">
+  <h1>Hotels in {{ location || 'your destination' }}</h1>
+
+  <p *ngIf="hotels.length === 0">
+    No hotel results available. Please return Home and search again.
+  </p>
+
+  <div class="hotel-grid">
+    <article class="hotel-card" *ngFor="let hotel of hotels">
+      <div class="hotel-icon">🏨</div>
+      <h2>{{ hotel.name }}</h2>
+      <p>{{ hotel.location }}</p>
+      <p>{{ hotel.address }}</p>
+      <p>{{ hotel.description }}</p>
+      <p>⭐ {{ hotel.starRating }} Star</p>
+      <p><strong>Amenities:</strong> {{ hotel.amenities }}</p>
+      <p><strong>Status:</strong> {{ hotel.status }}</p>
+      
+<button [routerLink]="['/rooms', hotel.id]">
+  View Rooms & Book
+</button>
+
+    </article>
+  </div>
+</main>

@@ -1,0 +1,79 @@
+
+<div class="page">
+  <header class="navbar">
+    <a routerLink="/">TravelEasy</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/my-bookings">My Bookings</a>
+  </header>
+
+  <main class="content">
+    <h1>Find Your Room</h1>
+    <p>Hotel ID: {{ hotelId }}</p>
+
+    <section class="search-panel">
+      <label>
+        Check-in
+        <input type="date" [(ngModel)]="checkIn" />
+      </label>
+
+      <label>
+        Check-out
+        <input type="date" [(ngModel)]="checkOut" />
+      </label>
+
+      <label>
+        Guests
+        <input type="number" min="1" [(ngModel)]="guests" />
+      </label>
+
+      <button (click)="searchRooms()" [disabled]="loading">
+        {{ loading ? 'Searching...' : 'Search Rooms' }}
+      </button>
+    </section>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <section class="room-grid" *ngIf="rooms.length > 0">
+      <article class="room-card" *ngFor="let room of rooms">
+        <h2>{{ room.roomType }}</h2>
+        <p>₹{{ room.pricePerNight }} per night</p>
+        <p>Capacity: {{ room.capacity }} guests</p>
+        <p>Total rooms: {{ room.totalRooms }}</p>
+        <p>Amenities: {{ room.amenities }}</p>
+
+        <button (click)="selectRoom(room)">Book This Room</button>
+      </article>
+    </section>
+
+    <section class="booking-panel" *ngIf="selectedRoom">
+      <h2>Complete Your Booking</h2>
+      <p>Selected room: {{ selectedRoom.roomType }}</p>
+
+      <label>
+        Guest name
+        <input type="text" [(ngModel)]="guestName" />
+      </label>
+
+      <label>
+        Email
+        <input type="email" [(ngModel)]="guestEmail" />
+      </label>
+
+      <p class="error" *ngIf="bookingError">{{ bookingError }}</p>
+
+      <button (click)="bookRoom()" [disabled]="bookingLoading">
+        {{ bookingLoading ? 'Booking...' : 'Confirm Booking' }}
+      </button>
+    </section>
+
+    <section class="success-panel" *ngIf="bookingSuccess">
+      <h2>Booking Confirmed!</h2>
+      <p>Booking ID: {{ bookingSuccess.id }}</p>
+      <p>Status: {{ bookingSuccess.status }}</p>
+      <p>Total amount: ₹{{ bookingSuccess.totalAmount }}</p>
+      <p>Guest: {{ bookingSuccess.guestName }}</p>
+      <p>Check-in: {{ bookingSuccess.checkInDate }}</p>
+      <p>Check-out: {{ bookingSuccess.checkOutDate }}</p>
+    </section>
+  </main>
+</div>

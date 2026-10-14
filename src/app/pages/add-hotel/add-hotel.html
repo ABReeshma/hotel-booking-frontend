@@ -1,0 +1,89 @@
+
+<div class="page">
+  <header class="navbar">
+    <a routerLink="/">TravelEasy</a>
+    <a routerLink="/partner/dashboard">Partner Dashboard</a>
+  </header>
+
+  <main class="content">
+    <h1>Add New Hotel</h1>
+    <p>Enter your property details below.</p>
+
+    <form class="hotel-form" (ngSubmit)="saveHotel()">
+      <label>
+        Hotel Name *
+        <input
+          name="name"
+          [(ngModel)]="hotel.name"
+          placeholder="Enter hotel name"
+          required
+        />
+      </label>
+
+      <label>
+        Location *
+        <input
+          name="location"
+          [(ngModel)]="hotel.location"
+          placeholder="e.g. Hyderabad"
+          required
+        />
+      </label>
+
+      <label>
+        Address *
+        <input
+          name="address"
+          [(ngModel)]="hotel.address"
+          placeholder="Enter full address"
+          required
+        />
+      </label>
+
+      <label>
+        Description
+        <textarea
+          name="description"
+          [(ngModel)]="hotel.description"
+          placeholder="Describe your hotel"
+        ></textarea>
+      </label>
+
+      <label>
+        Star Rating
+        <select name="starRating" [(ngModel)]="hotel.starRating">
+          <option [ngValue]="1">1 Star</option>
+          <option [ngValue]="2">2 Stars</option>
+          <option [ngValue]="3">3 Stars</option>
+          <option [ngValue]="4">4 Stars</option>
+          <option [ngValue]="5">5 Stars</option>
+        </select>
+      </label>
+
+      <label>
+        Amenities
+        <input
+          name="amenities"
+          [(ngModel)]="hotel.amenities"
+          placeholder="WiFi, AC, Swimming Pool"
+        />
+      </label>
+
+      <label>
+        Policies
+        <textarea
+          name="policies"
+          [(ngModel)]="hotel.policies"
+          placeholder="Enter hotel policies"
+        ></textarea>
+      </label>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Saving Hotel...' : 'Add Hotel' }}
+      </button>
+    </form>
+  </main>
+</div>
